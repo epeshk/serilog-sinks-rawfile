@@ -13,6 +13,7 @@
 // limitations under the License.
 
 using System;
+using System.Globalization;
 using System.IO;
 using Serilog.Configuration;
 using Serilog.Core;
@@ -94,7 +95,7 @@ namespace Serilog
             if (path == null) throw new ArgumentNullException(nameof(path));
             if (outputTemplate == null) throw new ArgumentNullException(nameof(outputTemplate));
 
-            var formatter = new LegacyUtf8TextFormatter(outputTemplate, formatProvider);
+            var formatter = new LegacyUtf8TextFormatter(outputTemplate, formatProvider ?? CultureInfo.InvariantCulture);
             return RawFile(sinkConfiguration, formatter, path, restrictedToMinimumLevel, fileSizeLimitBytes,
                 levelSwitch, buffered, flushToDiskInterval,
                 rollingInterval, rollOnFileSizeLimit, retainedFileCountLimit, hooks, retainedFileTimeLimit, keepFileOpen);
@@ -204,7 +205,7 @@ namespace Serilog
             if (path == null) throw new ArgumentNullException(nameof(path));
             if (outputTemplate == null) throw new ArgumentNullException(nameof(outputTemplate));
 
-            var formatter = new LegacyUtf8TextFormatter(outputTemplate, formatProvider);
+            var formatter = new LegacyUtf8TextFormatter(outputTemplate, formatProvider ?? CultureInfo.InvariantCulture);
             return RawFile(sinkConfiguration, formatter, path, restrictedToMinimumLevel, levelSwitch, hooks);
         }
 #endif

@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Serilog</RootNamespace>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <AssemblyOriginatorKeyFile>../../assets/Serilog.snk</AssemblyOriginatorKeyFile>
+        <SignAssembly>true</SignAssembly>
+
+        <PackageId>Serilog.Sinks.RawFile.Hooks</PackageId>
+        <PackageVersion>0.0.1</PackageVersion>
+
+        <PackageTags>serilog;file;rawfile</PackageTags>
+        <PackageIcon>icon.png</PackageIcon>
+        <PackageProjectUrl>https://github.com/epeshk/serilog-sinks-rawfile</PackageProjectUrl>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/epeshk/serilog-sinks-rawfile</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <RootNamespace>Serilog</RootNamespace>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageDescription>Integration package to use hooks for Serilog.Sinks.File with Serilog.Sinks.RawFile.</PackageDescription>
+
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Serilog.Sinks.RawFile\Serilog.Sinks.RawFile.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\assets\serilog-community-nuget.png" Pack="true" PackagePath="\icon.png"/>
+      <None Include="..\..\README.md" Pack="true" PackagePath=""/>
+    </ItemGroup>
+
+</Project>

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>Write Serilog events to text files in plain or JSON format.</Description>
-    <VersionPrefix>0.0.2</VersionPrefix>
+    <VersionPrefix>0.0.3</VersionPrefix>
     <Authors>Serilog Contributors</Authors>
     <TargetFramework>net6.0</TargetFramework>
     <LangVersion>latest</LangVersion>

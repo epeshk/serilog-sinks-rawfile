@@ -16,7 +16,7 @@ namespace Serilog.Utils
             get
             {
                 var writer = threadLocal ??= new ArrayBufferWriter<byte>();
-                Reset(writer);
+                writer.ResetWrittenCount();
                 return writer;
             }
         }
@@ -27,15 +27,6 @@ namespace Serilog.Utils
         {
             if (abw.Capacity <= MaxCapacity)
                 Storage.Enqueue(abw);
-        }
-
-        public static void Reset(ArrayBufferWriter<byte> abw)
-        {
-#if NET8_0_OR_GREATER
-            abw.ResetWrittenCount();
-#else
-            abw.Clear();
-#endif
         }
     }
 }

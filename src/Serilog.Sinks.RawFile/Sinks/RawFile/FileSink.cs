@@ -18,7 +18,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using Microsoft.Win32.SafeHandles;
 using Serilog.Events;
 using Serilog.Formatting;
 using Serilog.Utils;
@@ -104,14 +103,14 @@ namespace Serilog.Sinks.RawFile
             if (_quarantineStopwatch is not null && _quarantineStopwatch.Elapsed < TimeSpan.FromSeconds(5))
             {
                 if (_bufferWriter.WrittenCount >= MaxInMemoryCapacity)
-                    ArrayBufferWriterPool.Reset(_bufferWriter);
+                    _bufferWriter.ResetWrittenCount();
                 return;
             }
 
             try
             {
                 _bytesWritten = file.Write(_bufferWriter.WrittenSpan);
-                ArrayBufferWriterPool.Reset(_bufferWriter);
+                _bufferWriter.ResetWrittenCount();
             }
             catch (IOException)
             {
@@ -123,17 +122,6 @@ namespace Serilog.Sinks.RawFile
             if (_bufferWriter.Capacity > ArrayBufferWriterPool.MaxCapacity)
                 _bufferWriter = ArrayBufferWriterPool.Rent();
         }
-
-        static long WriteToHandle(SafeFileHandle handle, ArrayBufferWriter<byte> writer)
-        {
-            long length;
-            RandomAccess.Write(handle, writer.WrittenSpan, length = RandomAccess.GetLength(handle));
-            var fileSize = length + writer.WrittenCount;
-            ArrayBufferWriterPool.Reset(writer);
-            return fileSize;
-        }
-
-        static SafeFileHandle OpenHandle(string path) => System.IO.File.OpenHandle(path, FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
 
         /// <summary>
         /// Emit the provided log event to the sink.
